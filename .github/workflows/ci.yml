@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main  # Или master, в зависимости от вашей основной ветки
+  pull_request:
+    branches:
+      - main  # Или master, в зависимости от вашей основной ветки
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Использует последнюю версию второго основного выпуска
+
+    - name: Set up Python
+      uses: actions/setup-python@v2  # Использует последнюю версию второго основного выпуска
+      with:
+        python-version: '3.10'  # Укажите нужную версию Python
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set PYTHONPATH and run tests
+      env:
+        PYTHONPATH: ./src
+      run: |
+        pytest tests
