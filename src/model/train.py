@@ -1,14 +1,14 @@
 import os
-import pandas as pd
-from src.models.text_classifier import TextClassifier
-from sklearn.metrics import classification_report
 import logging
 import yaml
 import datetime
-from config.settings import settings
+import pandas as pd
+from model.text_classifier import TextClassifier
+from sklearn.metrics import classification_report
+from config.config import settings
 
 
-def create_experiment_folder(base_path="src/experiments"):
+def create_experiment_folder(base_path="experiments"):
     timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     experiment_path = os.path.join(base_path, f"experiment_{timestamp}")
     os.makedirs(experiment_path, exist_ok=True)
@@ -26,19 +26,15 @@ def save_log(experiment_path, log_content):
     with open(log_path, 'w') as file:
         file.write(log_content)
 
+
 def train_pipeline():
-    # Создание папки эксперимента
+
     experiment_path = create_experiment_folder()
 
-    # Сохранение конфигурации
-    config = {
-        "data": {
-            "processed_path": settings.dataset
-        },
-        "model": {
-            "max_features": 1000
-        }
-    }
+    # Чтение YAML файла
+    with open(settings.ml_model_config, 'r') as file:
+        config = yaml.safe_load(file)
+
     save_config(experiment_path, config)
 
     # Настройка логирования
@@ -47,22 +43,24 @@ def train_pipeline():
     logger = logging.getLogger()
 
     # Загрузка данных
-    data = pd.read_csv(settings.processed_data_path)
+    data = pd.read_csv(f"{settings.dataset}/train.csv")
 
     # Создание и обучение модели
-    classifier = TextClassifier()
-    classifier.train(data['text'], data['label'])
+    classifier = TextClassifier(max_features=config['model']['max_features'])
+    classifier.train(data['text'], data['category'])
 
     # Оценка модели
     predictions = classifier.predict(data['text'])
-    report = classification_report(data['label'], predictions)
+    report = classification_report(data['category'], predictions)
     logger.info("Classification Report:\n" + report)
 
     # Сохранение модели
-    os.makedirs(os.path.dirname(settings.model_path), exist_ok=True)
-    classifier.save(settings.model_path)
+    # os.makedirs(os.path.dirname(settings.model_save_name), exist_ok=True)
+    classifier.save(f"{os.path.join(experiment_path, settings.model_save_name)}")
 
     # Сохранение логов и конфигурации
+
+
     save_log(experiment_path, "Experiment completed successfully.\n" + report)
     logger.info(f"Experiment logs and configuration saved to {experiment_path}")
 
