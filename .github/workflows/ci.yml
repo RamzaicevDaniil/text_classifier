@@ -28,5 +28,5 @@ jobs:
 
     - name: Set PYTHONPATH and run tests
       run: |
-        cd src && export PYTHONPATH={$PWD} && echo $PYTHONPATH && pytest ../ 
+        cd src && export PYTHONPATH={$PWD} && echo $PYTHONPATH && echo $PWD $$ ls && pytest ../ 
         
