@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - main  # Или master, в зависимости от вашей основной ветки
+      - main
   pull_request:
     branches:
-      - main  # Или master, в зависимости от вашей основной ветки
+      - main
 
 jobs:
   test:
@@ -14,12 +14,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2  # Использует последнюю версию второго основного выпуска
+      uses: actions/checkout@v2
 
     - name: Set up Python
-      uses: actions/setup-python@v2  # Использует последнюю версию второго основного выпуска
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.10'  # Укажите нужную версию Python
+        python-version: '3.10'
 
     - name: Install dependencies
       run: |
