@@ -27,8 +27,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Set PYTHONPATH and run tests
-      env:
-        PYTHONPATH: ./src
       run: |
         cd src
+        export PYTHONPATH={$PWD}
         pytest ../
