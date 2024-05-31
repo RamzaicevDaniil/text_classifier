@@ -1,0 +1,4 @@
+data:
+  processed_path: dataset/processed//train.csv
+model:
+  max_features: 1000

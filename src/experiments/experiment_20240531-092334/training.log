@@ -1,0 +1,22 @@
+INFO:root:Classification Report:
+              precision    recall  f1-score   support
+
+   athletics       0.84      0.78      0.81      2970
+   autosport       0.76      0.68      0.72      3160
+  basketball       0.69      0.61      0.65      2850
+  boardgames       0.79      0.81      0.80      3020
+      esport       0.52      0.60      0.56      2990
+     extreme       0.49      0.65      0.56      3110
+    football       0.49      0.50      0.49      2860
+      hockey       0.68      0.62      0.65      2950
+martial_arts       0.59      0.59      0.59      3050
+   motosport       0.83      0.79      0.81      3030
+      tennis       0.86      0.81      0.83      3000
+  volleyball       0.69      0.62      0.65      2950
+winter_sport       0.60      0.63      0.62      2800
+
+    accuracy                           0.67     38740
+   macro avg       0.68      0.67      0.67     38740
+weighted avg       0.68      0.67      0.67     38740
+
+INFO:root:Experiment logs and configuration saved to experiments/experiment_20240531-092334
