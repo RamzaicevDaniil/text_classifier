@@ -30,4 +30,5 @@ jobs:
       env:
         PYTHONPATH: ./src
       run: |
+        cd src
         pytest
